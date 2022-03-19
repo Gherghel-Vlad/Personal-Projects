@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        
+        // Sends the question to be saved in the database
+        $('#Create').click(function () {
+            var url = location.href;
+            var data1 = { QAText: $('#QAText').val(), Keywords: $('#Keywords').val(), QAParentId: url.substring(url.lastIndexOf('/') +1) };
+            
+
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(data1),
+                url: 'http://localhost:51503/api/chatbot',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (data) {
+                    alert("Data sent and saved");
+                }
+            })
+        })
+
+
+    })
+
+
+</script>
+
+
+<form>
+
+    <div class="form-group">
+        <label for="QAText">Intrebarea/raspunsul:</label>
+        <input id="QAText" type="text" class="form-control" placeholder="Scrie intrebarea" />
+    </div>
+
+
+    <div class="form-group">
+        <label for="Keywords"> Cuvinte ce duc la aceasta intrebare/raspuns:</label>
+        <input id="Keywords" type="text" class="form-control" placeholder="Scrie keyword-urile"/>
+    </div>
+
+
+    <div  class="form-group">
+        <input id="Create" type="button" class="btn btn-primary" value="Creaza intrebarea/raspunsul" />
+    </div>
+</form>
+
+

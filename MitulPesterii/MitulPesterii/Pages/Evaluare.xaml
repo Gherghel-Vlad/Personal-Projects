@@ -1,0 +1,151 @@
+﻿<Page x:Class="MitulPesterii.Pages.Evaluare"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MitulPesterii.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="824" d:DesignWidth="1536"
+      Title="Evaluare">
+
+
+    <!-- Main grid -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="16*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <Image Grid.Row="1" Source="/Images/Pictures/KidLearning.png" />
+        </Grid>
+
+        <!-- The grid that contains the quiz grid -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="10*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <!-- The quiz grid -->
+            <Grid Grid.Row="1">
+                <Grid.Background>
+                    <ImageBrush ImageSource="/Images/Backgrounds Papyrus/OldPapyrus4.png" Stretch="Fill" />
+                </Grid.Background>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="5*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+
+                <!-- Right arrow button -->
+                <Button Grid.Column="2" Grid.Row="1" x:Name="RightBtn" Click="RightBtn_Click" Padding="25 0 10 0"  Style="{StaticResource Hoverless}"  HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Image Source="/Images/Arrows/ArrowRightV1.png" Stretch="Uniform" />
+                </Button>
+
+                <!-- Left arrow button -->
+                <Button x:Name="LeftBtn" Grid.Column="0" Grid.Row="1" Click="LeftBtn_Click" Padding="10 0 25 0" Style="{StaticResource Hoverless}"  HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Image Source="/Images/Arrows/ArrowLeftV1.png" Stretch="Uniform" />
+                </Button>
+
+
+                <!-- The real part where the quiz will be -->
+                <Grid Grid.Column="1" Grid.Row="1">
+                    <TextBlock x:Name="TopTB" 
+                               Style="{StaticResource ContentTextStyle}" 
+                               FontSize="35" VerticalAlignment="Top"
+                               FontWeight="Bold"
+                               TextAlignment="Center"
+                               HorizontalAlignment="Center" 
+                               />
+
+                    <!-- The start button for the test -->
+                    <Button x:Name="StartBtn" Click="StartBtn_Click" Style="{StaticResource Hoverless}" Margin="0 100 0 0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="100" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Backgrounds Papyrus/OldPapyrus2Transparent.png" Stretch="Fill" />
+                        </Button.Background>
+                        <TextBlock Text="Start" FontFamily="{StaticResource FancyHandWriting}" FontSize="53" />
+                    </Button>
+
+                    <!-- The image that will show based on the result made by the pupil -->
+                    <Image x:Name="FaceImg" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150" Margin="-40 60 0 0"/>
+
+                    <!-- The question and the radio buttons-->
+                    <StackPanel x:Name="QuestionSP" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
+                        <TextBlock x:Name="Question" FontFamily="{StaticResource LatoBlack}" FontSize="27" />
+                        <RadioButton VerticalContentAlignment="Center" GroupName="Answers" Margin="10"  x:Name="R1" Checked="R1_Checked" >
+                            <TextBlock x:Name="R1TB"  Style="{StaticResource RadioTextBlockStyle}"/>
+                        </RadioButton>
+                        <RadioButton VerticalContentAlignment="Center" GroupName="Answers" Margin="10" x:Name="R2"  Checked="R2_Checked">
+                            <TextBlock x:Name="R2TB" Style="{StaticResource RadioTextBlockStyle}" />
+                        </RadioButton>
+                        <RadioButton VerticalContentAlignment="Center" GroupName="Answers" Margin="10" x:Name="R3" Checked="R3_Checked">
+                            <TextBlock x:Name="R3TB" Style="{StaticResource RadioTextBlockStyle}"  />
+                        </RadioButton>
+                        <RadioButton VerticalContentAlignment="Center" GroupName="Answers" Margin="10" x:Name="R4" Checked="R4_Checked">
+                            <TextBlock x:Name="R4TB" Style="{StaticResource RadioTextBlockStyle}"   />
+                        </RadioButton>
+                    </StackPanel>
+
+                    <!-- THe numbers on the bottom that you can use to navigate through the questions -->
+                    <StackPanel Margin="0 0 30 0" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                        <Button x:Name="Btn1" Style="{StaticResource NumberStyle}">
+                            <TextBlock Text="1 " Style="{StaticResource NumberTextBlockStyle}"/>
+                        </Button>
+                        <Button x:Name="Btn2" Style="{StaticResource NumberStyle}">
+                            <TextBlock Text="2 " Style="{StaticResource NumberTextBlockStyle}"/>
+                        </Button>
+                        <Button x:Name="Btn3" Style="{StaticResource NumberStyle}" >
+                            <TextBlock Text="3 " Style="{StaticResource NumberTextBlockStyle}"/>
+                        </Button>
+                        <Button x:Name="Btn4" Style="{StaticResource NumberStyle}" >
+                            <TextBlock Text="4 " Style="{StaticResource NumberTextBlockStyle}"/>
+                        </Button>
+                        <Button x:Name="Btn5" Style="{StaticResource NumberStyle}" >
+                            <TextBlock Text="5 " Style="{StaticResource NumberTextBlockStyle}"/>
+                        </Button>
+                        <Button x:Name="Btn6" Style="{StaticResource NumberStyle}" >
+                            <TextBlock Text="6 " Style="{StaticResource NumberTextBlockStyle}"/>
+                        </Button>
+                        <Button x:Name="Btn7" Style="{StaticResource NumberStyle}" >
+                            <TextBlock Text="7 " Style="{StaticResource NumberTextBlockStyle}"/>
+                        </Button>
+                        <Button x:Name="Btn8" Style="{StaticResource NumberStyle}">
+                            <TextBlock Text="8 " Style="{StaticResource NumberTextBlockStyle}"/>
+                        </Button>
+                        <Button x:Name="Btn9" Style="{StaticResource NumberStyle}" >
+                            <TextBlock Text="9 " Style="{StaticResource NumberTextBlockStyle}"/>
+                        </Button>
+                    </StackPanel>
+
+                    <!-- The finish button for the test -->
+                    <Button ToolTipService.ShowOnDisabled="True" x:Name="FinishBtn" Click="FinishBtn_Click"  Style="{StaticResource Hoverless}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="125" Height="50" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Backgrounds Papyrus/OldPapyrus2Transparent.png" Stretch="Fill" />
+                        </Button.Background>
+                        <TextBlock Text="Finish" FontFamily="{StaticResource FancyHandWriting}" FontSize="32" />
+                        <Button.ToolTip>
+                            <ToolTip Placement="Left" >
+                                <TextBlock Style="{StaticResource ContentTextStyle}" FontSize="22" FontFamily="{StaticResource LatoBlack}" Text="Răspunde la toate întrebările pentru a putea termina."/>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

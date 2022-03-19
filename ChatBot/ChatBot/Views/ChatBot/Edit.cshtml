@@ -1,0 +1,172 @@
+﻿@model MayorAssistantApp.Models.ChatBotModels.QA
+
+@{
+    ViewBag.Title = "Edit";
+}
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var baseUrl = "https://localhost:44300";
+
+
+        // var model = //Html.Raw(Json.Encode(Model));
+        //populating the Keywords textarea
+
+        //function populateKeywords() {
+        //    let keywordsText = "";
+
+        //    for (let i = 0; i < model.Keywords.length; i++) {
+        //        if (model.Keywords[i] != "") {
+        //            if (i != 0) {
+        //                keywordsText += ", ";
+        //            }
+        //            keywordsText += model.Keywords[i];
+        //        }
+
+        //        $('#Keywords').val(keywordsText);
+        //    }
+        //}
+
+        //// populating the QAText textarea
+        //$('#QAText').val(model.QAText);
+        //trying another method to populate the textboxes for Intrebare and KeyWords
+        var url = window.location.href;
+        var urlParts = url.split('/');
+        var QAId = urlParts[urlParts.length - 1];
+
+
+        function Get(yourUrl) {
+            var Httpreq = new XMLHttpRequest(); // a new request
+            Httpreq.open("GET", yourUrl, false);
+            Httpreq.send(null);
+            return Httpreq.responseText;
+        }
+
+        var obj = JSON.parse(Get('https://localhost:44300/api/chatbot/getqabyid/1'));
+        alert(obj.QAText);
+
+
+        //$('#QAText').val(QAId);
+        $.ajax({
+            type: 'GET',
+            url: 'https://localhost:44300/api/chatbot/getqabyid/1',
+            dataType: 'json',
+            data: JSON.stringify(data),
+            success: function (data) {
+                alert(data.QAText);
+                alert(1);
+                //$('#QAText').val(data[0].QAText);
+                //$('#Keywords').val(data[0].Keywords);
+                //console.log(data);
+
+            }
+
+        })
+
+
+
+        $.ajax({
+            type: 'GET',
+            url: baseUrl + '/ api / chatbot /? id = ' + QAId,
+            dataType: 'json',
+            success: function (data) {
+                if (data[0].QAId == -1) {
+                    alert("Nu exista intrebari/raspunsuri care continua conversatia");
+                }
+                else {
+                    if (data[0].ComponentGroupId == 0) {
+                        $("#Responses").append("<tr> <td>" + data[0].QAText + "</td>" +
+                            "<td> <a href=\"http://localhost:44300/chatbot/edit/" + data[0].QAResponseId + " \">Edit</a> </td> </tr>");
+                    }
+                    else {
+                        for (var i = 0; i < data.length; i++) {
+                            $("#Responses").append("<tr> <td>" + data[i].QAText + "</td>" +
+                                "<td> <a href=\"http://localhost:44300/chatbot/edit/" + data[i].QAId + " \">Edit</a> </td> </tr>");
+                        }
+                    }
+
+                }
+
+            }
+
+        })
+
+
+        $('#AddQuestionBtn').click(function () {
+            location.href = baseUrl + '/chatbot/create/' + QAId;
+        })
+
+        $('#SaveBtn').click(function () {
+
+            var data1 = { QAText: $('#QAText').val(), Keywords: $('#Keywords').val() };
+
+
+            $.ajax({
+                type: 'PUT',
+                url: baseUrl + '/api/chatbot/?id=' + QAId,
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data1),
+                dataType: 'json',
+                success: function () {
+                    alert('Data updated');
+                }
+
+
+            })
+
+        })
+
+    })
+
+
+
+
+
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+
+        <hr />
+
+        <div class="col-md-8 col-md-offset-4 " style="margin:20px">
+            <label for="QAText">Intrebarea/raspunsul: </label>
+            <input id="QAText" type="text" style="width:200%" />
+        </div>
+
+
+        <div class="col-md-8 col-md-offset-4 " style="margin:20px">
+            Keywords:  <input id="Keywords" type="text" style="width:200%" />
+        </div>
+
+        <div class="col-md-offset-4 col-md-7" style="margin:20px">
+            <input type="button" id="SaveBtn" value="Salvare modificari" class="btn btn-default" />
+        </div>
+
+        <table class="table table-striped col-sm-8">
+            <thead>
+                <tr>
+                    <td>Intrebarea urmatoare</td>
+                    <td>Editare</td>
+                </tr>
+            </thead>
+            <tbody id="Responses"></tbody>
+        </table>
+        <br />
+
+        <div id="AddQuestionBtn" class="btn btn-primary">
+            <h5 style="text-align:center">Adauga intrebare/raspuns</h5>
+        </div>
+
+        <div></div>
+
+
+    </div>
+    <div></div>
+}
+
+

@@ -1,0 +1,169 @@
+﻿<Window x:Class="MitulPesterii.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:local="clr-namespace:MitulPesterii"
+        mc:Ignorable="d"
+        AllowsTransparency="True"
+        Icon="/Images/Icons/cave-icon.png"
+        WindowStyle="None"
+        x:Name="AppWindow"
+        Loaded="AppWindow_Loaded"
+        WindowState="Maximized"
+        MinHeight="{Binding WindowMinimumHeight}"
+        MinWidth="{Binding WindowMinimumWidth}"
+        WindowStartupLocation="CenterScreen"
+        Title="Mitul Pesterii" Height="824" Width="1536">
+
+
+    <Window.Resources>
+        <Style TargetType="{x:Type local:MainWindow}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Window}">
+                        <!-- The exterior border that contains the shadow too-->
+                        <Border  Padding="{Binding OuterMarginSizeThickness, FallbackValue=6}" MinHeight="450">
+
+                            <!-- Main window-->
+                            <Grid>
+
+                                <!-- Border that will inforce the rounded edges -->
+                                <Border x:Name="Container" 
+                                        Background="{StaticResource BackgroundLightBrush}"
+                                        CornerRadius="{Binding WindowRadiusThickness}"
+                                        />
+
+                                <!-- Window border and dropshadow-->
+                                <Border CornerRadius="{Binding WindowRadiusThickness, FallbackValue=10}"
+                                        Background="{Binding ForegroundLight, FallbackValue=White}">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="0" Opacity="0.2" />
+                                    </Border.Effect>
+                                </Border>
+
+                                <!--Main window content-->
+                                <Grid>
+
+                                    <Grid.OpacityMask>
+                                        <VisualBrush Visual="{Binding ElementName=Container}" />
+                                    </Grid.OpacityMask>
+
+                                    <Grid.RowDefinitions>
+                                        <!--Title Bar Row-->
+                                        <RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue=36}"/>
+
+                                        <!--The real content of the window -->
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Title Bar -->
+                                    <Grid Grid.Row="0" Panel.ZIndex="1">
+                                        <Grid.ColumnDefinitions>
+                                            <!-- Icon -->
+                                            <ColumnDefinition Width="Auto"/>
+
+                                            <!-- Title -->
+                                            <ColumnDefinition Width="*" />
+
+                                            <!-- Window buttons -->
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Icon -->
+                                        <Button Style="{StaticResource WindowIconButton}" Command="{Binding MenuCommand}" >
+                                            <Image Source="/Images/Icons/cave-icon.png"/>
+                                        </Button>
+
+                                        <!-- Title text -->
+                                        <Viewbox Grid.Column="1">
+                                            <TextBlock Style="{StaticResource TitleBarText}" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title, FallbackValue='Mitul Pesterii'}">
+                                            </TextBlock>
+                                        </Viewbox>
+
+                                        <!-- Window buttons -->
+                                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                            <Button Style="{StaticResource WindowButtonStyle}" Content="_" Command="{Binding MinimizeCommand}"/>
+                                            <!--<Button Style="{StaticResource WindowButtonStyle}" Content="[ ]" Command="{Binding MaximizeCommand}"/>-->
+                                            <Button Style="{StaticResource WindowButtonStyle}" Content="X" Command="{Binding CloseCommand}"/>
+                                        </StackPanel>
+
+                                    </Grid>
+
+                                    <!-- Page content-->
+                                    <Border Grid.Row="1" Padding="{Binding InnerContentBinding}">
+                                        <ContentPresenter Content="{TemplateBinding Content}"/>
+                                    </Border>
+
+
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+    </Window.Resources>
+
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            ResizeBorderThickness="{Binding ResizeBorderThickness}"
+            CaptionHeight="{Binding TitleHeight}"
+            GlassFrameThickness="0"
+            CornerRadius="0"
+            
+            />
+    </WindowChrome.WindowChrome>
+
+    <!-- The content/pages -->
+    <Grid x:Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="8*" />
+        </Grid.ColumnDefinitions>
+        <!--<Frame x:Name="MenuFrame" x:FieldModifier="public" Grid.Column="0" Content="{Binding ButtonsPage}" />-->
+
+        <ScrollViewer x:Name="SV" Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            
+            <StackPanel>
+                <StackPanel.Background>
+                   <ImageBrush ImageSource="/Images/Backgrounds Papyrus/MenuButtonsScroll2v2.png"   Stretch="Fill" />
+                </StackPanel.Background>
+                <Button Margin="50 125 0 10" 
+                        Style="{StaticResource MenuButtonStyleTopButton}" 
+                        Content="Despre Platon"
+                        Name="DesprePlaton"/>
+                <Button Margin="50 10 0 10" 
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Content="Film"
+                        Name="Film"/>
+                <Button Margin="50 10 0 10" 
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Content="Fragment"
+                        Name="Fragment"/>
+                <Button Margin="50 10 0 10" 
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Content="Palarii"
+                        Name="Palarii"/>
+                <Button Margin="50 10 0 10" 
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Content="Dictionar"
+                        Name="Dictionar"/>
+                <Button Margin="50 10 0 10" 
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Content="Evaluare"
+                        Name="Evaluare"/>
+            </StackPanel>
+        </ScrollViewer>
+
+
+        <Frame x:Name="ContentFrame" NavigationUIVisibility="Hidden"  x:FieldModifier="public" Grid.Column="1" Content="{Binding ContentPage}" />
+        
+        <Grid.Background>
+            <ImageBrush ImageSource="{Binding BackgroundImage}" Stretch="UniformToFill" />
+        </Grid.Background>
+    </Grid>
+</Window>
